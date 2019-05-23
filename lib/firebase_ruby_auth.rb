@@ -1,3 +1,5 @@
+require 'forwardable' # Fixes jwt bug: https://github.com/jwt/ruby-jwt/issues/316
+
 # https://github.com/jwt/ruby-jwt
 require 'jwt'
 
