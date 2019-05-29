@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'firebase_ruby_auth'
-  s.version     = '0.0.1'
-  s.date        = '2019-05-23'
+  s.version     = '0.0.2'
+  s.date        = '2019-05-29'
   s.summary     = 'Authenticate Firebase User Tokens in Ruby'
   s.description = 'Firebase Ruby Auth'
   s.authors     = ['Emily Ring']
@@ -10,6 +10,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/railscltgroup/firebase_auth'
   s.license     = 'MIT'
 
-  s.add_dependency('jwt', '~> 2.2.0')
+  s.add_dependency('jwt', '~> 2.2.1')
   s.add_dependency('typhoeus', '~> 1.3')
 end
