@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec-core', '~> 3.8')
   s.add_development_dependency('rspec-expectations', '~> 3.8')
   s.add_development_dependency('rspec-mocks', '~> 3.8')
+  s.add_development_dependency('webmock', '~> 3.5')
 end
