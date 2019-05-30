@@ -11,3 +11,5 @@ deploy:
   provider: rubygems
   api_key: "${RUBY_GEM_KEY}"
   gem: firebase-auth
+  on:
+    branch: gem-deploy
