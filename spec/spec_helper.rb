@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Stub APIs, mainly the google CERT_URL
 require 'webmock/rspec'
 

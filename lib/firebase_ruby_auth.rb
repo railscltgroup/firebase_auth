@@ -1,14 +1,17 @@
+# frozen_string_literal: true
+
 # https://github.com/jwt/ruby-jwt
 require 'jwt'
 
 # https://github.com/typhoeus/typhoeus
 require 'typhoeus'
 
+# Interacts with data from Firebase
 class FirebaseRubyAuth
   # This url is from the Google instructions:
   # https://firebase.google.com/docs/auth/admin/verify-id-tokens
   # This is were you can find the Google Public Key
-  CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
+  CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
 
   def initialize(firebase_project_id)
     @firebase_project_id = firebase_project_id
@@ -21,13 +24,14 @@ class FirebaseRubyAuth
   def decode_token(token)
     fetch_google_public_key if @expires < Time.now
     return {} if @keys.empty?
+
     token_values = begin
-                    JWT.decode(token, nil, true, options).first
-                  rescue JWT::JWKError
-                    {}
-                  rescue JWT::DecodeError
-                    {}
-                  end
+                     JWT.decode(token, nil, true, options).first
+                   rescue JWT::JWKError
+                     {}
+                   rescue JWT::DecodeError
+                     {}
+                   end
     valid?(token_values) ? token_values : {}
   end
 
@@ -35,15 +39,15 @@ class FirebaseRubyAuth
     # This requires the Typhoeus gem: https://github.com/typhoeus/typhoeus
     request = Typhoeus.get(CERT_URL)
     generate_keys(request)
-    set_key_expiry(request)
+    generate_key_expiry(request)
   end
 
   private def generate_keys(request)
     @keys = {
       keys: (JSON.parse request.body).map do |key, value|
-        JWT::JWK.new(OpenSSL::X509::Certificate.new(value).public_key).
-        export.
-        merge(kid: key)
+        JWT::JWK.new(OpenSSL::X509::Certificate.new(value).public_key)
+                .export
+                .merge(kid: key)
       end
     }
   rescue JSON::ParserError
@@ -66,13 +70,13 @@ class FirebaseRubyAuth
     }
   end
 
-  private def set_key_expiry(request)
-    @expires = Time.new(request.
-      headers['cache-control'].
-      split(', ').
-      select { |s| s.include?('max-age') }[0].
-      split('max-age=')[1].
-      to_i)
+  private def generate_key_expiry(request)
+    @expires = Time.new(request
+      .headers['cache-control']
+      .split(', ')
+      .select { |s| s.include?('max-age') }[0]
+      .split('max-age=')[1]
+      .to_i)
   end
 
   private def valid?(token_values)
