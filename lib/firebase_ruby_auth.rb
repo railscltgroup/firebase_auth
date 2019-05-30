@@ -69,12 +69,12 @@ class FirebaseRubyAuth
   end
 
   private def set_key_expiry(request)
-    @expires = Time.new(request.
-      headers['cache-control'].
-      split(', ').
-      select { |s| s.include?('max-age') }[0].
-      split('max-age=')[1].
-      to_i)
+    @expires = Time.new(request
+      .headers['cache-control']
+      .split(', ')
+      .select { |s| s.include?('max-age') }[0]
+      .split('max-age=')[1]
+      .to_i)
   end
 
   private def valid?(token_values)
