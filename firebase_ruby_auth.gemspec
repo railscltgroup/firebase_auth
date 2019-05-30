@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name        = 'firebase_ruby_auth'
-  s.version     = '0.0.2'
-  s.date        = '2019-05-29'
+  s.version     = '0.0.3'
+  s.date        = '2019-05-30'
   s.summary     = 'Authenticate Firebase User Tokens in Ruby'
   s.description = 'Firebase Ruby Auth'
   s.authors     = ['Emily Ring']
