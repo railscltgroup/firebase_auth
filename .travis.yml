@@ -10,6 +10,6 @@ before_install:
 deploy:
   provider: rubygems
   api_key: "${RUBY_GEM_KEY}"
-  gem: firebase-auth
+  gem: firebase-token-verify
   on:
     branch: gem-deploy
