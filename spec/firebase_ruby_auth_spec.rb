@@ -31,7 +31,8 @@ describe FirebaseRubyAuth do
 
     it 'fails to decode when iat date is in the future' do
       token = create_token(key: key, project_id: project_id,
-                           body: { iat: 1.week.from_now.to_i, email: 'test_email' })
+                           body: { iat: 1.week.from_now.to_i,
+                                   email: 'test_email' })
       expect(FirebaseRubyAuth.new(project_id).decode_token(token)).to eq({})
     end
 
@@ -43,7 +44,8 @@ describe FirebaseRubyAuth do
 
     it 'fails to decode when auth_time is in the future' do
       token = create_token(key: key, project_id: project_id,
-                           body: { auth_time: 1.day.from_now.to_i, email: 'test_email' })
+                           body: { auth_time: 1.day.from_now.to_i,
+                                   email: 'test_email' })
       expect(FirebaseRubyAuth.new(project_id).decode_token(token)).to eq({})
     end
   end

@@ -1,2 +1,6 @@
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
