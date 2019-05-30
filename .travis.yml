@@ -5,7 +5,7 @@ rvm:
 script: "rubocop && rspec"
 before_install:
   - gem build firebase_ruby_auth.gemspec
-  - gem install firebase_ruby_auth --development
+  - gem install firebase-token-verify --development
 
 deploy:
   provider: rubygems
