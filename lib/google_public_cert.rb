@@ -8,7 +8,6 @@ require 'net/http'
 # Fetches and decodes public certificates from google
 class GooglePublicCert
   # This url is from the Google instructions,
-  # where you can find the Google Public Key:
   # https://firebase.google.com/docs/auth/admin/verify-id-tokens
   CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
 
@@ -17,7 +16,7 @@ class GooglePublicCert
   end
 
   def keys
-    fetch_google_public_key if @expires < Time.now
+    fetch_google_public_key if @expires < Time.now.utc
     @keys
   end
 
@@ -43,9 +42,9 @@ class GooglePublicCert
   private def generate_key_expiry(request)
     headers = /max-age=\d+/.match(request.header['cache-control'].to_s).to_s
     @expires = if headers.present?
-                 Time.new(headers.split('max-age=')[1].to_i)
+                 Time.new(headers.split('max-age=')[1].to_i).utc
                else
-                 Time.now
+                 Time.now.utc
                end
   end
 end
