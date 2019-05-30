@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 2.6.2
-script: "rspec"
+script: "rubocop && rspec"
 before_install:
   - gem build firebase_ruby_auth.gemspec
   - gem install firebase_ruby_auth --development

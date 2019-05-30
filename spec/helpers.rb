@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Helpers
   def create_token(body: {}, key: nil, project_id: nil)
     jwk = JWT::JWK.new(key)
