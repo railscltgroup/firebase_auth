@@ -11,7 +11,7 @@ module Helpers
   def stub_public_cert(rsa_key)
     cert = create_cert(rsa_key)
 
-    stub_request(:any, FirebaseRubyAuth::CERT_URL).to_return(
+    stub_request(:any, GooglePublicCert::CERT_URL).to_return(
       headers: { 'cache-control' => "max-age=#{30.minutes.to_i}" },
       body: { "test_key": cert.to_pem }.to_json
     )
