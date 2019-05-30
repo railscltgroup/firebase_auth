@@ -3,8 +3,8 @@
 $LOAD_PATH.unshift File.expand_path('lib', __dir__)
 
 Gem::Specification.new do |s|
-  s.name        = 'firebase_ruby_auth'
-  s.version     = '0.0.5'
+  s.name        = 'firebase-token-verify'
+  s.version     = '0.0.7'
   s.date        = '2019-05-30'
   s.summary     = 'Authenticate Firebase User Tokens in Ruby'
   s.description = 'Firebase Ruby Auth'
