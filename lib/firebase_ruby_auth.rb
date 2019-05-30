@@ -1,5 +1,3 @@
-require 'forwardable' # Fixes jwt bug: https://github.com/jwt/ruby-jwt/issues/316
-
 # https://github.com/jwt/ruby-jwt
 require 'jwt'
 
@@ -19,21 +17,18 @@ class FirebaseRubyAuth
 
   # token would be a user's ID token
   # https://firebase.google.com/docs/auth/admin/verify-id-tokens
-  # This will either return a user's email address, or nil
-  def retrieve_email_from_token(token)
+  # This will either return a hash with user data, or an empty hash
+  def decode_token(token)
     fetch_google_public_key if @expires < Time.now
-    return if @keys.empty?
-    decode_token(token)['email']
-  end
-
-  private def decode_token(token)
-    begin
-      JWT.decode(token, nil, true, options).first
-    rescue JWT::JWKError
-      {}
-    rescue JWT::DecodeError
-      {}
-    end
+    return {} if @keys.empty?
+    token_values = begin
+                    JWT.decode(token, nil, true, options).first
+                  rescue JWT::JWKError
+                    {}
+                  rescue JWT::DecodeError
+                    {}
+                  end
+    valid?(token_values) ? token_values : {}
   end
 
   private def fetch_google_public_key
@@ -62,6 +57,8 @@ class FirebaseRubyAuth
       aud: @firebase_project_id,
       verify_aud: true,
 
+      verify_iat: true,
+
       iss: "https://securetoken.google.com/#{@firebase_project_id}",
       verify_iss: true,
 
@@ -76,5 +73,11 @@ class FirebaseRubyAuth
       select { |s| s.include?('max-age') }[0].
       split('max-age=')[1].
       to_i)
+  end
+
+  private def valid?(token_values)
+    token_values['sub'].present? &&
+    token_values['auth_time'].present? &&
+    token_values['auth_time'].to_i < Time.now.utc.to_i
   end
 end
