@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'firebase_ruby_auth'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.date        = '2019-05-30'
   s.summary     = 'Authenticate Firebase User Tokens in Ruby'
   s.description = 'Firebase Ruby Auth'
@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec-expectations', '~> 3.8.0')
   s.add_development_dependency('rspec-mocks', '~> 3.8.0')
   s.add_development_dependency('rubocop', '~> 0.71.0')
+  s.add_development_dependency('simplecov', '~> 0.16.1')
   s.add_development_dependency('webmock', '~> 3.5.1')
 end
