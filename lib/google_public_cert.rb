@@ -41,11 +41,11 @@ class GooglePublicCert
   end
 
   private def generate_key_expiry(request)
-    @expires = Time.new(request
-      .header['cache-control']
-      .split(', ')
-      .select { |s| s.include?('max-age') }[0]
-      .split('max-age=')[1]
-      .to_i)
+    headers = /max-age=\d+/.match(request.header['cache-control'].to_s).to_s
+    @expires = if headers.present?
+                 Time.new(headers.split('max-age=')[1].to_i)
+               else
+                 Time.now
+               end
   end
 end
