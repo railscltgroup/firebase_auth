@@ -60,6 +60,8 @@ class FirebaseRubyAuth
       aud: @firebase_project_id,
       verify_aud: true,
 
+      verify_iat: true,
+
       iss: "https://securetoken.google.com/#{@firebase_project_id}",
       verify_iss: true,
 
