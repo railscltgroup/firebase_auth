@@ -13,5 +13,6 @@ deploy:
   provider: rubygems
   api_key: $RUBY_GEM_KEY
   gem: firebase-token-verify
+  gemspec: firebase_ruby_auth.gemspec
   on:
     branch: gem-deploy
