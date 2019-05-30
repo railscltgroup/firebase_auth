@@ -15,4 +15,4 @@ deploy:
   gem: firebase-token-verify
   gemspec: firebase_ruby_auth.gemspec
   on:
-    branch: gem-deploy
+    tags: true
