@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Gem::Specification.new do |s|
   s.name        = 'firebase_ruby_auth'
   s.version     = '0.0.2'
@@ -6,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = 'Firebase Ruby Auth'
   s.authors     = ['Emily Ring']
   s.email       = 'railsclt@gmail.com'
-  s.files       = ["lib/firebase_ruby_auth.rb"]
+  s.files       = ['lib/firebase_ruby_auth.rb']
   s.homepage    = 'https://github.com/railscltgroup/firebase_auth'
   s.license     = 'MIT'
 
