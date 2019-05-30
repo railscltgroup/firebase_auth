@@ -2,14 +2,16 @@ language: ruby
 rvm:
   - 2.6.2
 
-script: "rubocop && rspec"
 before_install:
   - gem build firebase_ruby_auth.gemspec
   - gem install firebase-token-verify --development
+script:
+  - rubocop
+  - rspec
 
 deploy:
   provider: rubygems
-  api_key: "${RUBY_GEM_KEY}"
+  api_key: $RUBY_GEM_KEY
   gem: firebase-token-verify
   on:
     branch: gem-deploy
