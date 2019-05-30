@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
-# Stub APIs, mainly the google CERT_URL
-require 'webmock/rspec'
-
 # Used for testing time
 require 'active_support/core_ext/numeric/time.rb'
 
+# Review test coverage
+require 'simplecov'
+
+# Stub APIs, mainly the google CERT_URL
+require 'webmock/rspec'
+
 # Helper testing methods
 require './spec/helpers'
+
+SimpleCov.minimum_coverage 90
+SimpleCov.minimum_coverage_by_file 90
+SimpleCov.start
 
 RSpec.configure do |config|
   config.include Helpers
