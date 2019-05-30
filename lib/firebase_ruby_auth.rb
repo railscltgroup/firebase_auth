@@ -21,7 +21,8 @@ class FirebaseRubyAuth
   def retrieve_email_from_token(token)
     fetch_google_public_key if @expires < Time.now
     return if @keys.empty?
-    decode_token(token)['email']
+    token_values = decode_token(token)
+    token_values['email'] if valid?(token_values)
   end
 
   private def decode_token(token)
@@ -76,5 +77,11 @@ class FirebaseRubyAuth
       select { |s| s.include?('max-age') }[0].
       split('max-age=')[1].
       to_i)
+  end
+
+  private def valid?(token_values)
+    token_values['sub'].present? &&
+    token_values['auth_time'].present? &&
+    token_values['auth_time'].to_i < Time.now.utc.to_i
   end
 end

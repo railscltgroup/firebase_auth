@@ -3,9 +3,11 @@ module Helpers
     jwk = JWT::JWK.new(key)
     payload = {
       aud: project_id,
+      auth_time: 1.day.ago.to_i,
       exp: 1.day.from_now.to_i,
       iat: 1.day.ago.to_i,
       iss: "https://securetoken.google.com/#{project_id}",
+      sub: '1'
     }.merge(body)
     headers = { kid: 'test_key' }
     JWT.encode(payload, jwk.keypair, 'RS256', headers)
