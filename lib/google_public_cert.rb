@@ -3,14 +3,13 @@
 # https://github.com/jwt/ruby-jwt
 require 'jwt'
 
-# https://github.com/typhoeus/typhoeus
-require 'typhoeus'
+require 'net/http'
 
 # Fetches and decodes public certificates from google
 class GooglePublicCert
-  # This url is from the Google instructions:
+  # This url is from the Google instructions,
+  # where you can find the Google Public Key:
   # https://firebase.google.com/docs/auth/admin/verify-id-tokens
-  # This is were you can find the Google Public Key
   CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
 
   def initialize
@@ -23,8 +22,7 @@ class GooglePublicCert
   end
 
   private def fetch_google_public_key
-    # This requires the Typhoeus gem: https://github.com/typhoeus/typhoeus
-    request = Typhoeus.get(CERT_URL)
+    request = Net::HTTP.get_response(URI(CERT_URL))
     generate_keys(request)
     generate_key_expiry(request)
   end
@@ -32,9 +30,10 @@ class GooglePublicCert
   private def generate_keys(request)
     @keys = {
       keys: (JSON.parse request.body).map do |key, value|
-        JWT::JWK.new(OpenSSL::X509::Certificate.new(value).public_key)
-                .export
-                .merge(kid: key)
+        JWT::JWK
+          .new(OpenSSL::X509::Certificate.new(value).public_key)
+          .export
+          .merge(kid: key)
       end
     }
   rescue JSON::ParserError
@@ -43,7 +42,7 @@ class GooglePublicCert
 
   private def generate_key_expiry(request)
     @expires = Time.new(request
-      .headers['cache-control']
+      .header['cache-control']
       .split(', ')
       .select { |s| s.include?('max-age') }[0]
       .split('max-age=')[1]
