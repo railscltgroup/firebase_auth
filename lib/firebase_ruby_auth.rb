@@ -39,7 +39,7 @@ class FirebaseRubyAuth
     # This requires the Typhoeus gem: https://github.com/typhoeus/typhoeus
     request = Typhoeus.get(CERT_URL)
     generate_keys(request)
-    set_key_expiry(request)
+    generate_key_expiry(request)
   end
 
   private def generate_keys(request)
@@ -70,7 +70,7 @@ class FirebaseRubyAuth
     }
   end
 
-  private def set_key_expiry(request)
+  private def generate_key_expiry(request)
     @expires = Time.new(request
       .headers['cache-control']
       .split(', ')
