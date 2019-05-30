@@ -12,6 +12,8 @@ require 'webmock/rspec'
 # Helper testing methods
 require './spec/helpers'
 
+SimpleCov.minimum_coverage 90
+SimpleCov.minimum_coverage_by_file 90
 SimpleCov.start
 
 RSpec.configure do |config|
