@@ -28,15 +28,7 @@ user.getIdToken(true).then(token => {
 ```sh
 require 'firebase_ruby_auth'
 
-class FirebaseRubyAuthWrapper
-  PROJECT_ID = ENV['<your_firebase_project_id>']
+PROJECT_ID = ENV['<your_firebase_project_id>']
 
-  def initialize
-    @auth = FirebaseRubyAuth.new(PROJECT_ID)
-  end
-
-  def retrieve_email_from_token(token)
-    @auth.decode_token(token)['email']
-  end
-end
+FirebaseRubyAuth.new(PROJECT_ID).decode_token(token)
 ```
